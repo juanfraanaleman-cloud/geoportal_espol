@@ -219,13 +219,26 @@ const edificaciones = new ol.layer.Group({
 });
 */
 
+const viaStyle = new ol.style.Style({
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
 const viasespol = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
-  style: new ol.style.Style({
-    stroke: new ol.style.Stroke({ color: '#2980b9', width: 2 })
-  }),
   title: 'Vías Espol',
   visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('name'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('via')) {
+      return viaStyle;
+    } else {
+      return null; 
+    }
+  }
 });
 
 
