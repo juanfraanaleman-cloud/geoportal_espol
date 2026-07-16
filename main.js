@@ -311,7 +311,8 @@ const map = new ol.Map(
     {   
         target: "map",
         layers: [
-            vias
+            basemap,
+            vias,
         ], 
         view: new ol.View({
             center: new ol.proj.fromLonLat([-79.964506 , -2.148383]),
