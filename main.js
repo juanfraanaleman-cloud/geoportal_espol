@@ -202,7 +202,7 @@ const edificaciones = new ol.layer.Group({
 });
 
 
-const viasespol = new ol.layer.Tile({
+/*const viasespol = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
     params: {
@@ -217,6 +217,15 @@ const viasespol = new ol.layer.Tile({
   visible: false, 
   projection: 'EPSG:4326',
 });
+*/
+
+const viasespol = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
+  style: new ol.style.Style({
+    stroke: new ol.style.Stroke({ color: '#2980b9', width: 2 })
+  })
+});
+
 
 /*
 var lindero = new ol.layer.Tile({
@@ -303,7 +312,6 @@ const map = new ol.Map(
         layers: [
             basemap,
             vias,
-            infraestructura,
         ], 
         view: new ol.View({
             center: new ol.proj.fromLonLat([-79.964506 , -2.148383]),
