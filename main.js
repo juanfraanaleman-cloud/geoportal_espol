@@ -221,6 +221,7 @@ const viasespol = new ol.layer.Tile({
   projection: 'EPSG:4326',
 });
 
+/*
 var lindero = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -235,7 +236,7 @@ var lindero = new ol.layer.Tile({
   visible: true,
   projection: 'EPSG:4326',
 });
-
+*/
 
 const infraestructura = new ol.layer.Group({
   title: 'Infraestructuras',
