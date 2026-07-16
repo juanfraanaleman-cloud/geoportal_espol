@@ -316,6 +316,8 @@ const map = new ol.Map(
     }
 );
 
+map.addLayer(lindero);
+
 const layerSwitcher = new ol.control.LayerSwitcher(
 {
   startActive: true,
