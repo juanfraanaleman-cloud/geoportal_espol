@@ -38,9 +38,6 @@ const lindero_localVectorSource = new ol.source.Vector({
 
 // 5. Apply your custom styling
 const lindero_vectorStyle = new ol.style.Style({
-  fill: new ol.style.Fill({
-  color: 'rgba(8, 8, 8, 0.5)', // Red transparency
-  }),
   stroke: new ol.style.Stroke({
     color: '#141313',
     width: 3,
