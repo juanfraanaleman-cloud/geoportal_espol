@@ -182,6 +182,7 @@ const polig_espol = new ol.layer.Vector({
 
 
 // Filtrar solo los edificios comodato
+/*
 const polig_comodato = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -198,8 +199,38 @@ const polig_comodato = new ol.layer.Tile({
   visible: false, 
   projection: 'EPSG:4326'
 });
+*/
+
+const polig_comodatoStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(47, 49, 51, 0.5)' 
+  }),
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
+const polig_comodato = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
+  title: 'ESPOL',
+  visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('comodato')) {  // debe estar en minúsculas
+      return polig_comodatoStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+
+
 
 // Filtrar solo los edificios arriendo
+/*
 const polig_arriendo = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -216,6 +247,7 @@ const polig_arriendo = new ol.layer.Tile({
   visible: false, 
   projection: 'EPSG:4326'
 });
+*/
 
 
 
