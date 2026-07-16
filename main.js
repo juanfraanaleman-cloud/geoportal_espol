@@ -166,7 +166,7 @@ const polig_espol = new ol.layer.Vector({
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('ESPOL')) {
-      return viaStyle;
+      return polig_espolStyle;
     } else {
       return null; 
     }
