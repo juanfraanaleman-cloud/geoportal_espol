@@ -273,7 +273,6 @@ const vias = new ol.layer.Group({
 
 
 
-
 /*
 edificaciones.on('change:visible', function() {
   const isSubGroupVisible = edificaciones.getVisible();
