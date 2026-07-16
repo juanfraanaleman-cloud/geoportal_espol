@@ -168,7 +168,7 @@ const polig_espol = new ol.layer.Vector({
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
-    if (attributeValue && attributeValue.toLowerCase().includes('ESPOL')) {
+    if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
       return polig_espolStyle;
     } else {
       return null; 
