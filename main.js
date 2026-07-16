@@ -4,11 +4,11 @@ const source = "http://200.126.24.171:8080" // Puede ser ip (poner la ip actuali
 
 
 // Coordenadas de puntos del lindero obtenido con Google Maps y transformado a coordenadas GeoJSON con Mapshaper
-var lindero = new ol.geom.Polygon([[
+var lindero_geom = new ol.geom.Polygon([[
     [-79.982435,-2.151406],[-79.982385,-2.147952],[-79.981731,-2.144858],[-79.981156,-2.144333],[-79.968392,-2.13964],[-79.968154,-2.139688],[-79.9674006,-2.1395158],[-79.961451,-2.137411],[-79.9586325,-2.1367511],[-79.955032,-2.136118],[-79.952349,-2.135548],[-79.949207,-2.134686],[-79.947943,-2.1346],[-79.947656,-2.134801],[-79.94661,-2.138208],[-79.947179,-2.139331],[-79.947154,-2.139921],[-79.9469689,-2.1412942],[-79.94705,-2.142129],[-79.946844,-2.142172],[-79.946819,-2.142066],[-79.946667,-2.141856],[-79.946437,-2.141763],[-79.946128,-2.141857],[-79.946136,-2.1442279],[-79.946155,-2.145537],[-79.946202,-2.147717],[-79.946441,-2.14965],[-79.948978,-2.150719],[-79.949852,-2.151076],[-79.951259,-2.151611],[-79.952622,-2.152254],[-79.952839,-2.152379],[-79.954163,-2.152894],[-79.954186,-2.152878],[-79.955498,-2.153403],[-79.956497,-2.153757],[-79.958846,-2.154693],[-79.962863,-2.156287],[-79.967174,-2.157574],[-79.9704073,-2.1547897],[-79.975341,-2.152406],[-79.97591,-2.153082],[-79.977137,-2.153758],[-79.980967,-2.153143],[-79.982435,-2.151406] 
 ]]);
 
-lindero.transform('EPSG:4326', 'EPSG:3857'); 
+lindero_geom.transform('EPSG:4326', 'EPSG:3857'); 
 
 const fillStyle = new ol.style.Style({
   fill: new ol.style.Fill({
@@ -23,6 +23,42 @@ const borderStyle = new ol.style.Style({
     width: 3,         // Grosor en pixeles
   })
 });
+
+
+const lindero_Feature = new ol.Feature({
+  geometry: lindero_geom,
+  name: 'Lindero',
+  status: 'Active' // You can attach custom attributes here just like in PostgreSQL!
+});
+
+// 4. Create an empty Vector Source and add your JavaScript feature into it
+const lindero_localVectorSource = new ol.source.Vector({
+  features: [lindero_geom] // You can add multiple features inside this array separated by commas
+});
+
+// 5. Apply your custom styling
+const lindero_vectorStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(231, 76, 60, 0.5)', // Red transparency
+  }),
+  stroke: new ol.style.Stroke({
+    color: '#c0392b',
+    width: 3,
+  }),
+});
+
+// 6. Define the final layer and attach it to your main map instance
+const lindero = new ol.layer.Vector({
+  source: lindero_localVectorSource,
+  style: lindero_vectorStyle
+});
+
+
+
+
+
+
+
 
 var basemap = new ol.layer.Tile({
   // type: 'base',
