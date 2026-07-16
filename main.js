@@ -223,7 +223,8 @@ const viasespol = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
   style: new ol.style.Style({
     stroke: new ol.style.Stroke({ color: '#2980b9', width: 2 })
-  })
+  }),
+  visible: false,
 });
 
 
@@ -311,7 +312,6 @@ const map = new ol.Map(
         target: "map",
         layers: [
             basemap,
-            vias,
         ], 
         view: new ol.View({
             center: new ol.proj.fromLonLat([-79.964506 , -2.148383]),
