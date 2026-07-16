@@ -38,9 +38,6 @@ const lindero_localVectorSource = new ol.source.Vector({
 
 // 5. Apply your custom styling
 const lindero_vectorStyle = new ol.style.Style({
-  fill: new ol.style.Fill({
-  color: 'rgba(221, 180, 180, 0.5)', // Red transparency
-  }),
   stroke: new ol.style.Stroke({
     color: '#141313',
     width: 3,
@@ -315,7 +312,7 @@ const map = new ol.Map(
     }
 );
 
-//map.addLayer(lindero);
+map.addLayer(lindero);
 
 const layerSwitcher = new ol.control.LayerSwitcher(
 {
