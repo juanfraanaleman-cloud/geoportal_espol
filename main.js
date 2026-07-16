@@ -307,7 +307,6 @@ const map = new ol.Map(
             basemap,
             vias,
             infraestructura,
-            lindero
         ], 
         view: new ol.View({
             center: new ol.proj.fromLonLat([-79.964506 , -2.148383]),
