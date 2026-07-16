@@ -224,6 +224,7 @@ const viasespol = new ol.layer.Vector({
   style: new ol.style.Style({
     stroke: new ol.style.Stroke({ color: '#2980b9', width: 2 })
   }),
+  title: 'Vías Espol',
   visible: false,
 });
 
