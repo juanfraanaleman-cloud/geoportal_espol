@@ -86,6 +86,7 @@ var basemap = new ol.layer.Tile({
 });*/
 
 // Con la capa poligonos se puede hacer que todo un subgrupo tenga el mismo estilo. No debe tener título
+/*
 const poligonos = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -102,8 +103,34 @@ const poligonos = new ol.layer.Tile({
   visible: false, 
   projection: 'EPSG:4326'
 });
+*/
+
+const poligonosStyle = new ol.style.Style({
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
+const poligonos = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
+  title: 'Edificaciones',
+  visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('name'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('via')) {
+      return viaStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+
 
 // Filtrar solo los edificios espol
+/*
 const polig_espol = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -121,6 +148,35 @@ const polig_espol = new ol.layer.Tile({
   visible: false, 
   projection: 'EPSG:4326'
 });
+*/
+
+
+const polig_espolStyle = new ol.style.Style({
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
+const polig_espol = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
+  title: 'ESPOL',
+  visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('ESPOL')) {
+      return viaStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+
+
+
+
 
 // Filtrar solo los edificios comodato
 const polig_comodato = new ol.layer.Tile({
@@ -197,7 +253,7 @@ const puntos = new ol.layer.Tile({
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_arriendo, polig_comodato, polig_espol, poligonos],
+  layers: [polig_espol],
   fold: 'close',
 });
 
@@ -326,6 +382,7 @@ const map = new ol.Map(
         layers: [
             basemap,
             vias,
+            edificaciones,
         ], 
         view: new ol.View({
             center: new ol.proj.fromLonLat([-79.964506 , -2.148383]),
