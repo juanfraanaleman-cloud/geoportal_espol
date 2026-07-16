@@ -160,7 +160,7 @@ const polig_espolStyle = new ol.style.Style({
 
 
 const polig_espol = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   title: 'ESPOL',
   visible: false,
   style: function(feature) {
