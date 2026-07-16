@@ -33,7 +33,7 @@ const lindero_Feature = new ol.Feature({
 
 // 4. Create an empty Vector Source and add your JavaScript feature into it
 const lindero_localVectorSource = new ol.source.Vector({
-  features: [lindero_geom] // You can add multiple features inside this array separated by commas
+  features: [lindero_Feature] // You can add multiple features inside this array separated by commas
 });
 
 // 5. Apply your custom styling
