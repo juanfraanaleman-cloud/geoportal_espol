@@ -152,6 +152,9 @@ const polig_espol = new ol.layer.Tile({
 
 
 const polig_espolStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(47, 49, 51, 0.5)' 
+  }),
   stroke: new ol.style.Stroke({ 
     color: '#17191a', 
     width: 2 
