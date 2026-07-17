@@ -316,7 +316,7 @@ const puntosStyle = new ol.style.Style({
 const puntos_espol = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
-  style: function(feature) {
+  style: function(feature, resolution) {
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
 
