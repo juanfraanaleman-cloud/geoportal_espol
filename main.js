@@ -211,7 +211,7 @@ const polig_comodatoStyle = new ol.style.Style({
 
 
 const polig_comodato = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/polig_comodato.geojson', format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   title: 'COMODATO',
   visible: false,
   style: function(feature) {
@@ -259,13 +259,13 @@ const polig_arriendoStyle = new ol.style.Style({
 
 
 const polig_arriendo = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/polig_arriendo.geojson', format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   title: 'ARRIENDO',
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('arriendo')) {  // debe estar en minúsculas
-      return polig_comodatoStyle;
+      return polig_arriendoStyle;
     } else {
       return null; 
     }
@@ -312,7 +312,7 @@ const puntos_espol = new ol.layer.Vector({
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
-      return polig_comodatoStyle;
+      return puntosStyle;
     } else {
       return null; 
     }
