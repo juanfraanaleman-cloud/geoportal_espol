@@ -302,6 +302,13 @@ const puntosStyle = new ol.style.Style({
       color: '#17191a', 
       width: 1 
     })
+  }),
+  text: new ol.style.Text({
+    font: 'bold 12px Calibri,sans-serif',
+    fill: new ol.style.Fill({ color: '#17191a' }),
+    stroke: new ol.style.Stroke({ color: '#ffffff', width: 3 }),
+    offsetY: -20, 
+    text: ''
   })
 });
 
