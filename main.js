@@ -162,7 +162,7 @@ const polig_espolStyle = new ol.style.Style({
 });
 
 
-const polig_espol_ = new ol.layer.Vector({
+const polig_espol_= new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
   style: function(feature) {
@@ -174,8 +174,6 @@ const polig_espol_ = new ol.layer.Vector({
     }
   }
 });
-
-
 
 
 
@@ -320,12 +318,13 @@ const puntos_espol = new ol.layer.Vector({
   }
 });
 
-const polig_espol = new ol.layer.Group({
-  combine: true,    // Combina ambas layers en uno solo
-  title: 'ESPOL',
-  layers: [polig_espol_, puntos_espol],
-  fold: 'close',
+polig_espol.on('change:visible', () => {
+  const isVisible = polig_espol_.getVisible();
+  puntos_espol.setVisible(isVisible);
 });
+
+
+
 
 
 // No es necesario utilizarias las layer line para edificaciones
@@ -348,7 +347,7 @@ const polig_espol = new ol.layer.Group({
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_arriendo, polig_comodato, polig_espol],
+  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol],
   fold: 'close',
 });
 
