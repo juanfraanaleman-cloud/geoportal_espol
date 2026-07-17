@@ -162,7 +162,7 @@ const polig_espolStyle = new ol.style.Style({
 });
 
 
-const polig_espol = new ol.layer.Vector({
+const polig_espol_ = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   title: 'ESPOL',
   visible: false,
@@ -249,11 +249,35 @@ const polig_arriendo = new ol.layer.Tile({
 });
 */
 
+const polig_arriendoStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(47, 49, 51, 0.9)' 
+  }),
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
+const polig_arriendo = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/polig_arriendo.geojson', format: new ol.format.GeoJSON() }),
+  title: 'ESPOL',
+  visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('arriendo')) {  // debe estar en minúsculas
+      return polig_comodatoStyle;
+    } else {
+      return null; 
+    }
+  }
+});
 
 
 
 
-
+/*
 const puntos = new ol.layer.Tile({
   source: new ol.source.TileWMS({
     url: source + '/geoserver/gis_espol/wms',
@@ -267,6 +291,39 @@ const puntos = new ol.layer.Tile({
     projection: 'EPSG:4326'
   }),
 });
+*/
+
+
+const puntosStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(47, 49, 51, 0.9)' 
+  }),
+  stroke: new ol.style.Stroke({ 
+    color: '#17191a', 
+    width: 2 
+  })
+});
+
+
+const puntos_espol = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
+  visible: false,
+  style: function(feature) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
+      return polig_comodatoStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+const polig_espol = new ol.layer.Group({
+  title: 'ESPOL',
+  layers: [polig_espol, puntos_espol],
+  fold: 'close',
+});
+
 
 // No es necesario utilizarias las layer line para edificaciones
 /*const edificaciones = new ol.layer.Tile({
@@ -288,7 +345,7 @@ const puntos = new ol.layer.Tile({
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_espol],
+  layers: [polig_espol, polig_comodato, polig_arriendo],
   fold: 'close',
 });
 
