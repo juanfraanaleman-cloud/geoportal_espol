@@ -294,13 +294,13 @@ const puntos = new ol.layer.Tile({
 
 const puntosStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 6, // Controls the size of the point in pixels
+    radius: 3, // Controls the size of the point in pixels
     fill: new ol.style.Fill({
       color: 'rgba(47, 49, 51, 0.9)' 
     }),
     stroke: new ol.style.Stroke({ 
       color: '#17191a', 
-      width: 2 
+      width: 1 
     })
   })
 });
@@ -312,6 +312,19 @@ const puntos_espol = new ol.layer.Vector({
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
+
+
+
+      const codigo = feature.get('name') || '';
+      const codigoAnterior = feature.get('cod_anterior') || '';
+
+      let labelText = codigo; 
+      
+      if (codigoAnterior) {
+        labelText += `\nantes ${codigoAnterior}`;
+      }
+
+      puntosStyle.getText().setText(labelText);
       return puntosStyle;
     } else {
       return null; 
