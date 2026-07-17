@@ -320,18 +320,21 @@ const puntos_espol = new ol.layer.Vector({
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
 
-
-
-      const codigo = feature.get('name') || '';
-      const codigoAnterior = feature.get('cod_anterior') || '';
-
-      let labelText = codigo; 
-      
-      if (codigoAnterior) {
-        labelText += `\nantes ${codigoAnterior}`;
+      if (resolution < 0.01) {
+        // Show labels when zoomed in close
+        const codigo = feature.get('name') || '';
+        const codigoAnterior = feature.get('cod_anterior') || '';
+        let labelText = codigo; 
+        
+        if (codigoAnterior) {
+          labelText += `\nAntes:  ${codigoAnterior}`;
+        }
+        puntosStyle.getText().setText(labelText);
+      } else {
+        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        puntosStyle.getText().setText('');
       }
 
-      puntosStyle.getText().setText(labelText);
       return puntosStyle;
     } else {
       return null; 
