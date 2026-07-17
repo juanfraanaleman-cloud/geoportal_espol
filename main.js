@@ -294,12 +294,15 @@ const puntos = new ol.layer.Tile({
 
 
 const puntosStyle = new ol.style.Style({
-  fill: new ol.style.Fill({
-    color: 'rgba(47, 49, 51, 0.9)' 
-  }),
-  stroke: new ol.style.Stroke({ 
-    color: '#17191a', 
-    width: 2 
+  image: new ol.style.Circle({
+    radius: 6, // Controls the size of the point in pixels
+    fill: new ol.style.Fill({
+      color: 'rgba(47, 49, 51, 0.9)' 
+    }),
+    stroke: new ol.style.Stroke({ 
+      color: '#17191a', 
+      width: 2 
+    })
   })
 });
 
@@ -318,6 +321,7 @@ const puntos_espol = new ol.layer.Vector({
 });
 
 const polig_espol = new ol.layer.Group({
+  combine: true,    // Combina ambas layers en uno solo
   title: 'ESPOL',
   layers: [polig_espol_, puntos_espol],
   fold: 'close',
@@ -344,7 +348,7 @@ const polig_espol = new ol.layer.Group({
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_espol, polig_comodato, polig_arriendo],
+  layers: [polig_arriendo, polig_comodato, polig_espol],
   fold: 'close',
 });
 
