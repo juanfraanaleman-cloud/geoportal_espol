@@ -164,7 +164,6 @@ const polig_espolStyle = new ol.style.Style({
 
 const polig_espol_ = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
-  title: 'ESPOL',
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
@@ -214,7 +213,7 @@ const polig_comodatoStyle = new ol.style.Style({
 
 const polig_comodato = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_comodato.geojson', format: new ol.format.GeoJSON() }),
-  title: 'ESPOL',
+  title: 'COMODATO',
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
@@ -262,7 +261,7 @@ const polig_arriendoStyle = new ol.style.Style({
 
 const polig_arriendo = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_arriendo.geojson', format: new ol.format.GeoJSON() }),
-  title: 'ESPOL',
+  title: 'ARRIENDO',
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
