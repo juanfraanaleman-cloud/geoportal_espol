@@ -701,67 +701,52 @@ map.on('singleclick', function (evt) {
   }
 });
 
+
+
+
 // Para mostrar información al hacer click en polig_espol
 map.on('singleclick', function (evt) {
 
-  // Evita que aparezca el popup si la capa está descactivada
-  if (!polig_espol.getVisible()) {
+  // 1. Evita que aparezca el popup si la capa principal está desactivada
+  if (!polig_espol_.getVisible()) {
     overlay.setPosition(undefined); 
     return; 
   }
 
-  var viewResolution = map.getView().getResolution();
-  var viewProjection = map.getView().getProjection();
-  
-  // Colocar url dinámica
-  var url = polig_espol.getSource().getFeatureInfoUrl(
-    evt.coordinate,
-    viewResolution,
-    viewProjection,
-    {
-      'INFO_FORMAT': 'application/json',
-      'FEATURE_COUNT': '1',
-      // Para que GeoServer solo observe la tabla polígonos:
-      'QUERY_LAYERS': 'gis_espol:pg_polig_espol' 
+  // 2. Buscar el elemento vector directamente en el pixel del click
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
+    // Asegura que solo lea elementos de tu capa polig_espol_
+    if (layer === polig_espol_) {
+      return clickedFeature;
     }
-  );
+  });
 
-  
-  if (url) {
-    fetch(url)
-      .then(function (response) { return response.json(); })
-      .then(function (data) {
-        // Chequea si se realizó la intersección del polígono
-        if (data.features && data.features.length > 0) {
-          
-          // GeoServer coloca las columnas de la tabla PostgreSQL dentro de features[0].properties
-          var props = data.features[0].properties; 
-          
-          // Colocar todas las columnas disponibles en consola F12
-          console.log("Polygon data found: ", props);
-          
-          // Contruir la tabla con HTML
-          var htmlContent = 
-          '<table class="popup-table">' + 
-          '<tr>'
-          + '<td><strong>Ref.</strong></td>' + '<td>'+ (props.referencia_inmueble || 'N/A') + '</td>' + 
-          '</tr>' +
-          '<tr>'
-          + '<td><strong>Área (m2)</strong></td>' + '<td>'+ (props.área_total_construcción || 'N/A') + '</td>' +
-          '</tr>' +
-          '</table>'
-          ;
-          
-          document.getElementById('popup-content').innerHTML = htmlContent;
-          overlay.setPosition(evt.coordinate);
-        } else {
-          // Esconder popup al hacer click en espacío vacío
-          overlay.setPosition(undefined);
-        }
-      })
-      .catch(function (error) {
-        console.error('Error fetching data from GeoServer:', error);
-      });
+  // 3. Si encontramos un polígono válido bajo el cursor
+  if (feature) {
+    // Con GeoJSON local, extraes las columnas usando .getProperties()
+    var props = feature.getProperties(); 
+    
+    // Muestra todas las columnas disponibles en la consola (F12)
+    console.log("Polygon data found: ", props);
+    
+    // 4. Construir la tabla con HTML utilizando los nombres de tus campos GeoJSON
+    // NOTA: Asegúrate de que las propiedades coincidan exactamente (ej. 'área_total_construcción' o 'area_total')
+    var htmlContent = 
+    '<table class="popup-table">' + 
+    '<tr>'
+    + '<td><strong>Ref.</strong></td>' + '<td>'+ (props.referencia_inmueble || 'N/A') + '</td>' + 
+    '</tr>' +
+    '<tr>'
+    + '<td><strong>Área (m2)</strong></td>' + '<td>'+ (props.área_total_construcción || 'N/A') + '</td>' +
+    '</tr>' +
+    '</table>';
+    
+    document.getElementById('popup-content').innerHTML = htmlContent;
+    overlay.setPosition(evt.coordinate);
+    
+  } else {
+    // Esconder popup al hacer click en espacio vacío
+    overlay.setPosition(undefined);
   }
 });
 
