@@ -439,7 +439,7 @@ polig_arriendo.on('change:visible', () => {
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol],
+  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol, puntos_comodato, puntos_arriendo],
   fold: 'close',
 });
 
