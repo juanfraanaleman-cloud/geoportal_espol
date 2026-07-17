@@ -320,7 +320,7 @@ const puntos_espol = new ol.layer.Vector({
 
 const polig_espol = new ol.layer.Group({
   title: 'ESPOL',
-  layers: [polig_espol, puntos_espol],
+  layers: [polig_espol_, puntos_espol],
   fold: 'close',
 });
 
