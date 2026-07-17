@@ -708,7 +708,7 @@ map.on('singleclick', function (evt) {
 map.on('singleclick', function (evt) {
 
   // 1. Evita que aparezca el popup si la capa principal está desactivada
-  if (!polig_espol_.getVisible()) {
+  if (!polig_espol.getVisible()) {
     overlay.setPosition(undefined); 
     return; 
   }
@@ -716,7 +716,7 @@ map.on('singleclick', function (evt) {
   // 2. Buscar el elemento vector directamente en el pixel del click
   var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
     // Asegura que solo lea elementos de tu capa polig_espol_
-    if (layer === polig_espol_) {
+    if (layer === polig_espol) {
       return clickedFeature;
     }
   });
