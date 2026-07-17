@@ -343,9 +343,79 @@ const puntos_espol = new ol.layer.Vector({
 });
 
 
+const puntos_comodato = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
+  visible: false,
+  style: function(feature, resolution) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('comodato')) {  // debe estar en minúsculas
+
+      if (resolution < 0.8) {
+        // Show labels when zoomed in close
+        const codigo = feature.get('name') || '';
+        const codigoAnterior = feature.get('cod_anterior') || '';
+        let labelText = codigo; 
+        
+        if (codigoAnterior) {
+          labelText += `\nAntes:  ${codigoAnterior}`;
+        }
+        puntosStyle.getText().setText(labelText);
+      } else {
+        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        puntosStyle.getText().setText('');
+      }
+
+      return puntosStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+
+const puntos_arriendo = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
+  visible: false,
+  style: function(feature, resolution) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue && attributeValue.toLowerCase().includes('arriendo')) {  // debe estar en minúsculas
+
+      if (resolution < 0.8) {
+        // Show labels when zoomed in close
+        const codigo = feature.get('name') || '';
+        const codigoAnterior = feature.get('cod_anterior') || '';
+        let labelText = codigo; 
+        
+        if (codigoAnterior) {
+          labelText += `\nAntes:  ${codigoAnterior}`;
+        }
+        puntosStyle.getText().setText(labelText);
+      } else {
+        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        puntosStyle.getText().setText('');
+      }
+
+      return puntosStyle;
+    } else {
+      return null; 
+    }
+  }
+});
+
+
 polig_espol.on('change:visible', () => {
   const isVisible = polig_espol.getVisible();
   puntos_espol.setVisible(isVisible);
+});
+
+polig_comodato.on('change:visible', () => {
+  const isVisible = polig_comodato.getVisible();
+  puntos_comodato.setVisible(isVisible);
+});
+
+polig_arriendo.on('change:visible', () => {
+  const isVisible = polig_arriendo.getVisible();
+  puntos_arriendo.setVisible(isVisible);
 });
 
 
@@ -369,7 +439,7 @@ polig_espol.on('change:visible', () => {
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol],
+  layers: [polig_arriendo, polig_comodato, polig_espol],
   fold: 'close',
 });
 
