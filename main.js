@@ -321,7 +321,7 @@ const puntos_espol = new ol.layer.Vector({
 
 
 polig_espol.on('change:visible', () => {
-  const isVisible = polig_espol_.getVisible();
+  const isVisible = polig_espol.getVisible();
   puntos_espol.setVisible(isVisible);
 });
 
