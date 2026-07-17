@@ -153,7 +153,7 @@ const polig_espol = new ol.layer.Tile({
 
 const polig_espolStyle = new ol.style.Style({
   fill: new ol.style.Fill({
-    color: 'rgba(47, 49, 51, 0.5)' 
+    color: 'rgba(47, 49, 51, 0.9)'    // El 0.5 se refiere a la opacidad
   }),
   stroke: new ol.style.Stroke({ 
     color: '#17191a', 
@@ -203,7 +203,7 @@ const polig_comodato = new ol.layer.Tile({
 
 const polig_comodatoStyle = new ol.style.Style({
   fill: new ol.style.Fill({
-    color: 'rgba(47, 49, 51, 0.5)' 
+    color: 'rgba(47, 49, 51, 0.9)' 
   }),
   stroke: new ol.style.Stroke({ 
     color: '#17191a', 
@@ -213,7 +213,7 @@ const polig_comodatoStyle = new ol.style.Style({
 
 
 const polig_comodato = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_comodato.geojson', format: new ol.format.GeoJSON() }),
   title: 'ESPOL',
   visible: false,
   style: function(feature) {
