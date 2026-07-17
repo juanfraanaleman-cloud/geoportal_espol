@@ -320,7 +320,7 @@ const puntos_espol = new ol.layer.Vector({
     const attributeValue = feature.get('propietario'); 
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
 
-      if (resolution < 0.2) {
+      if (resolution < 0.8) {
         // Show labels when zoomed in close
         const codigo = feature.get('name') || '';
         const codigoAnterior = feature.get('cod_anterior') || '';
