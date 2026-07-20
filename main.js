@@ -775,7 +775,7 @@ map.on('singleclick', function (evt) {
 
 
 
-
+/*
 // Para mostrar información al hacer click en polig_espol
 map.on('singleclick', function (evt) {
 
@@ -925,7 +925,74 @@ map.on('singleclick', function (evt) {
   }
   }
 });
+*/
 
+map.on('singleclick', function (evt) {
+  
+  var clickedFeature = null;
+  var clickedLayer = null;
+
+  // 1. Buscamos el elemento y guardamos a qué capa pertenece
+  map.forEachFeatureAtPixel(evt.pixel, function (feature, layer) {
+    clickedFeature = feature;
+    clickedLayer = layer;
+    return true; // Se detiene al encontrar la capa más alta
+  });
+
+  // 2. Si se hizo click en el vacío, escondemos el popup y salimos
+  if (!clickedFeature || !clickedLayer) {
+    overlay.setPosition(undefined);
+    return;
+  }
+
+  // Si la capa que tocamos no está visible, no hacemos nada
+  if (!clickedLayer.getVisible()) {
+    overlay.setPosition(undefined);
+    return;
+  }
+
+  var props = clickedFeature.getProperties();
+  console.log("Polygon data found on layer: ", props);
+
+  var htmlContent = '<table class="popup-table">';
+
+  // 3. FILTRAMOS EL CONTENIDO DEPENDIENDO DE QUÉ CAPA SE HIZO CLICK
+  
+  // --- CASO 1: CAPA ESPOL (La que editaste) ---
+  if (clickedLayer === polig_espol) {
+    htmlContent += 
+    '<tr><td><strong>Ref.</strong></td><td>'+ (props.referencia_inmueble || 'N/A') + '</td></tr>' +
+    '<tr><td><strong>Área (m2)</strong></td><td>'+ (props.área_total_construcción || 'N/A') + '</td></tr>';
+  } 
+  
+  // --- CASO 2: TU SEGUNDA CAPA (Reemplaza 'capa_dos' con tu variable real) ---
+  else if (typeof polig_comodato !== 'undefined' && clickedLayer === polig_comodato) {
+    htmlContent += 
+    '<tr><td><strong>Campo 1</strong></td><td>'+ (props.nombre_o_campo_de_capa_dos || 'N/A') + '</td></tr>' +
+    '<tr><td><strong>Campo 2</strong></td><td>'+ (props.otro_campo || 'N/A') + '</td></tr>';
+  }
+
+  else if (typeof polig_arriendo !== 'undefined' && clickedLayer === polig_arriendo) {
+    htmlContent += 
+    '<tr><td><strong>Campo 1</strong></td><td>'+ (props.nombre_o_campo_de_capa_dos || 'N/A') + '</td></tr>' +
+    '<tr><td><strong>Campo 2</strong></td><td>'+ (props.otro_campo || 'N/A') + '</td></tr>';
+  }
+
+  // --- CASO 3: CUALQUIER OTRA CAPA (Automatizada para que nunca falle) ---
+  /*else {
+    for (var key in props) {
+      if (key !== 'geometry' && key !== 'boundedBy' && props.hasOwnProperty(key)) {
+        htmlContent += '<tr><td><strong>' + key + '</strong></td><td>' + (props[key] || 'N/A') + '</td></tr>';
+      }
+    }
+  }*/
+
+  htmlContent += '</table>';
+
+  // 4. INYECTAMOS EL CONTENIDO Y POSICIONAMOS EN EL CLICK EXACTO
+  document.getElementById('popup-content').innerHTML = htmlContent;
+  overlay.setPosition(evt.coordinate); // Mantiene tu posición de click original exacta
+});
 
 
 
