@@ -107,7 +107,7 @@ const poligonos = new ol.layer.Tile({
 
 const poligonosStyle = new ol.style.Style({
   fill: new ol.style.Fill({
-    color: 'rgba(11, 78, 145, 0.9)'    // El 0.5 se refiere a la opacidad
+    color: 'rgba(49, 192, 68, 0.9)'    // El 0.5 se refiere a la opacidad
   }),
   stroke: new ol.style.Stroke({ 
     color: '#17191a', 
@@ -326,7 +326,7 @@ const puntos = new ol.layer.Vector({
       // Quita etiquetas al hacer zoom out
       puntosStyle.getText().setText('');
     }
-
+    return puntosStyle;
   }
 });
 
