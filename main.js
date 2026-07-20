@@ -158,7 +158,7 @@ const polig_espolStyle = new ol.style.Style({
 
 const polig_espol= new ol.layer.Vector({
   title: 'ESPOL',
-  source: new ol.source.Vector({ url: './capas/polig_espol.geojson?v=' + new Date().getTime(), format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
   style: function(feature) {
     const attributeValue = feature.get('propietario'); 
@@ -253,7 +253,7 @@ const polig_arriendoStyle = new ol.style.Style({
 
 
 const polig_arriendo = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/polig_espol.geojson?v=' + new Date().getTime(), format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   title: 'ARRIENDO',
   visible: false,
   style: function(feature) {
@@ -792,6 +792,8 @@ map.on('singleclick', function (evt) {
       return clickedFeature;
     }
   });
+
+  
 
   // 3. Si encontramos un polígono válido bajo el cursor
   if (feature) {
