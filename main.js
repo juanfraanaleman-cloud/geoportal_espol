@@ -979,6 +979,12 @@ map.on('singleclick', function (evt) {
     '<tr><td><strong>Área (m2)</strong></td><td>'+ (props.área_total_construcción || 'N/A') + '</td></tr>';
   }
 
+  else if (typeof poligonos !== 'undefined' && clickedLayer === poligonos) {
+    htmlContent += 
+    '<tr><td><strong>Ref.</strong></td><td>'+ (props.referencia_inmueble || 'N/A') + '</td></tr>' +
+    '<tr><td><strong>Área (m2)</strong></td><td>'+ (props.área_total_construcción || 'N/A') + '</td></tr>';
+  }
+
   // --- CASO 3: CUALQUIER OTRA CAPA (Automatizada para que nunca falle) ---
   /*else {
     for (var key in props) {
