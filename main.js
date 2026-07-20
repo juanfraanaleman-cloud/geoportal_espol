@@ -890,7 +890,7 @@ map.on('singleclick', function (evt) {
     return clickedFeature;
   }, {
     layerFilter: function (layer) {
-      return layer === polig_espol; // Reemplaza esto con la variable de cada capa en sus respectivos archivos
+      return layer === polig_arriendo; // Reemplaza esto con la variable de cada capa en sus respectivos archivos
     }
   });
 
