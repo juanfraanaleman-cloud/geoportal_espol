@@ -820,7 +820,9 @@ map.on('singleclick', function (evt) {
     
   } else {
     // Esconder popup al hacer click en espacio vacío
+    if (!map.hasFeatureAtPixel(evt.pixel)) {
     overlay.setPosition(undefined);
+  }
   }
 });
 
