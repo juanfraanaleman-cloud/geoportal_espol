@@ -118,7 +118,15 @@ const poligonosStyle = new ol.style.Style({
 const poligonos = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
-  style: poligonosStyle
+  style: poligonosStyle,
+  style: function(feature) {
+    const attributeValue = feature.get('propietario'); 
+    if (attributeValue !== null && attributeValue !== undefined && String(attributeValue).trim() !== '') {  // Quita las celdas null
+      return poligonosStyle;
+    } else {
+      return null; // Oculta el polígono si el campo está vacío o es nulo
+    }
+  }
 });
 
 
