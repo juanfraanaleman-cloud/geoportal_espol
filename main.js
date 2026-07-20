@@ -875,7 +875,7 @@ map.on('singleclick', function (evt) {
 map.on('singleclick', function (evt) {
 
   // 1. Evita que aparezca el popup si la capa principal está desactivada
-  if (!polig_arriedno.getVisible()) {
+  if (!polig_arriendo.getVisible()) {
     overlay.setPosition(undefined); 
     return; 
   }
