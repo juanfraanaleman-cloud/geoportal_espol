@@ -118,7 +118,7 @@ const poligonosStyle = new ol.style.Style({
 const poligonos = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
-  style: 'poligonosStyle'
+  style: poligonosStyle
 });
 
 
