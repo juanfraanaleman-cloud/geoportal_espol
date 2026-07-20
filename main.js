@@ -106,25 +106,19 @@ const poligonos = new ol.layer.Tile({
 */
 
 const poligonosStyle = new ol.style.Style({
+  fill: new ol.style.Fill({
+    color: 'rgba(11, 78, 145, 0.9)'    // El 0.5 se refiere a la opacidad
+  }),
   stroke: new ol.style.Stroke({ 
     color: '#17191a', 
     width: 2 
   })
 });
 
-
 const poligonos = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/lin_espol.geojson', format: new ol.format.GeoJSON() }),
-  title: 'Edificaciones',
   visible: false,
-  style: function(feature) {
-    const attributeValue = feature.get('name'); 
-    if (attributeValue && attributeValue.toLowerCase().includes('via')) {
-      return viaStyle;
-    } else {
-      return null; 
-    }
-  }
+  style: 'poligonosStyle'
 });
 
 
@@ -294,7 +288,7 @@ const puntos = new ol.layer.Tile({
 
 const puntosStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 3, // Controls the size of the point in pixels
+    radius: 3, 
     fill: new ol.style.Fill({
       color: 'rgba(47, 49, 51, 0.9)' 
     }),
@@ -313,6 +307,31 @@ const puntosStyle = new ol.style.Style({
 });
 
 
+const puntos = new ol.layer.Vector({
+  source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
+  visible: false,
+  style: function(feature, resolution) {
+
+    if (resolution < 0.8) {
+      // Muestra etiquetas al hacer zoom
+      const codigo = feature.get('name') || '';
+      const codigoAnterior = feature.get('cod_anterior') || '';
+      let labelText = codigo; 
+        
+      if (codigoAnterior) {
+        labelText += `\nAntes:  ${codigoAnterior}`;
+      }
+      puntosStyle.getText().setText(labelText);
+    } else {
+      // Quita etiquetas al hacer zoom out
+      puntosStyle.getText().setText('');
+    }
+
+  }
+});
+
+
+
 const puntos_espol = new ol.layer.Vector({
   source: new ol.source.Vector({ url: './capas/puntos_espol.geojson', format: new ol.format.GeoJSON() }),
   visible: false,
@@ -321,7 +340,7 @@ const puntos_espol = new ol.layer.Vector({
     if (attributeValue && attributeValue.toLowerCase().includes('espol')) {  // debe estar en minúsculas
 
       if (resolution < 0.8) {
-        // Show labels when zoomed in close
+        // Muestra etiquetas al hacer zoom
         const codigo = feature.get('name') || '';
         const codigoAnterior = feature.get('cod_anterior') || '';
         let labelText = codigo; 
@@ -351,7 +370,7 @@ const puntos_comodato = new ol.layer.Vector({
     if (attributeValue && attributeValue.toLowerCase().includes('comodato')) {  // debe estar en minúsculas
 
       if (resolution < 0.8) {
-        // Show labels when zoomed in close
+        // Muestra etiquetas al hacer zoom
         const codigo = feature.get('name') || '';
         const codigoAnterior = feature.get('cod_anterior') || '';
         let labelText = codigo; 
@@ -381,7 +400,7 @@ const puntos_arriendo = new ol.layer.Vector({
     if (attributeValue && attributeValue.toLowerCase().includes('arriendo')) {  // debe estar en minúsculas
 
       if (resolution < 0.8) {
-        // Show labels when zoomed in close
+        // Muestra etiquetas al hacer zoom
         const codigo = feature.get('name') || '';
         const codigoAnterior = feature.get('cod_anterior') || '';
         let labelText = codigo; 
@@ -418,6 +437,11 @@ polig_arriendo.on('change:visible', () => {
   puntos_arriendo.setVisible(isVisible);
 });
 
+poligonos.on('change:visible', () => {
+  const isVisible = poligonos.getVisible();
+  puntos.setVisible(isVisible);
+});
+
 
 // No es necesario utilizarias las layer line para edificaciones
 /*const edificaciones = new ol.layer.Tile({
@@ -439,7 +463,7 @@ polig_arriendo.on('change:visible', () => {
 // poligonos debe estar al final
 const edificaciones = new ol.layer.Group({
   title: 'Edificaciones',
-  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol, puntos_comodato, puntos_arriendo],
+  layers: [polig_arriendo, polig_comodato, polig_espol, puntos_espol, puntos_comodato, puntos_arriendo, poligonos, puntos],
   fold: 'close',
 });
 
