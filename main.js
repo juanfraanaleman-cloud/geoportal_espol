@@ -786,10 +786,11 @@ map.on('singleclick', function (evt) {
   }
 
   // 2. Buscar el elemento vector directamente en el pixel del click
-  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
-    // Asegura que solo lea elementos de tu capa polig_espol_
-    if (layer === polig_espol) {
-      return clickedFeature;
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature) {
+    return clickedFeature;
+  }, {
+    layerFilter: function (layer) {
+      return layer === polig_espol; // Reemplaza esto con la variable de cada capa en sus respectivos archivos
     }
   });
 
@@ -885,12 +886,14 @@ map.on('singleclick', function (evt) {
   }
 
   // 2. Buscar el elemento vector directamente en el pixel del click
-  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
-    // Asegura que solo lea elementos de tu capa polig_espol_
-    if (layer === polig_arriendo) {
-      return clickedFeature;
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature) {
+    return clickedFeature;
+  }, {
+    layerFilter: function (layer) {
+      return layer === polig_espol; // Reemplaza esto con la variable de cada capa en sus respectivos archivos
     }
   });
+
 
   // 3. Si encontramos un polígono válido bajo el cursor
   if (feature) {
