@@ -253,7 +253,7 @@ const polig_arriendoStyle = new ol.style.Style({
 
 
 const polig_arriendo = new ol.layer.Vector({
-  source: new ol.source.Vector({ url: './capas/polig_espol.geojson', format: new ol.format.GeoJSON() }),
+  source: new ol.source.Vector({ url: './capas/polig_espol.geojson?v=' + new Date().getTime(), format: new ol.format.GeoJSON() }),
   title: 'ARRIENDO',
   visible: false,
   style: function(feature) {
