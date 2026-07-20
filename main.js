@@ -664,6 +664,53 @@ document.getElementById('popup-closer').onclick = function() {
 // Para mostrar información al hacer click en poligonos
 map.on('singleclick', function (evt) {
 
+  // 1. Evita que aparezca el popup si la capa principal está desactivada
+  if (!poligonos.getVisible()) {
+    overlay.setPosition(undefined); 
+    return; 
+  }
+
+  // 2. Buscar el elemento vector directamente en el pixel del click
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
+    // Asegura que solo lea elementos de tu capa polig_espol_
+    if (layer === poligonos) {
+      return clickedFeature;
+    }
+  });
+
+  // 3. Si encontramos un polígono válido bajo el cursor
+  if (feature) {
+    // Con GeoJSON local, extraes las columnas usando .getProperties()
+    var props = feature.getProperties(); 
+    
+    // Muestra todas las columnas disponibles en la consola (F12)
+    console.log("Polygon data found: ", props);
+    
+    // 4. Construir la tabla con HTML utilizando los nombres de tus campos GeoJSON
+    // NOTA: Asegúrate de que las propiedades coincidan exactamente (ej. 'área_total_construcción' o 'area_total')
+    var htmlContent = 
+    '<table class="popup-table">' + 
+    '<tr>'
+    + '<td><strong>Ref.</strong></td>' + '<td>'+ (props.referencia_inmueble || 'N/A') + '</td>' + 
+    '</tr>' +
+    '<tr>'
+    + '<td><strong>Área (m2)</strong></td>' + '<td>'+ (props.área_total_construcción || 'N/A') + '</td>' +
+    '</tr>' +
+    '</table>';
+    
+    document.getElementById('popup-content').innerHTML = htmlContent;
+    overlay.setPosition(evt.coordinate);
+    
+  } else {
+    // Esconder popup al hacer click en espacio vacío
+    overlay.setPosition(undefined);
+  }
+});
+
+
+/*
+map.on('singleclick', function (evt) {
+
   // Evita que aparezca el popup si la capa está descactivada
   if (!poligonos.getVisible()) {
     overlay.setPosition(undefined); 
@@ -724,6 +771,7 @@ map.on('singleclick', function (evt) {
       });
   }
 });
+*/
 
 
 
@@ -741,6 +789,101 @@ map.on('singleclick', function (evt) {
   var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
     // Asegura que solo lea elementos de tu capa polig_espol_
     if (layer === polig_espol) {
+      return clickedFeature;
+    }
+  });
+
+  // 3. Si encontramos un polígono válido bajo el cursor
+  if (feature) {
+    // Con GeoJSON local, extraes las columnas usando .getProperties()
+    var props = feature.getProperties(); 
+    
+    // Muestra todas las columnas disponibles en la consola (F12)
+    console.log("Polygon data found: ", props);
+    
+    // 4. Construir la tabla con HTML utilizando los nombres de tus campos GeoJSON
+    // NOTA: Asegúrate de que las propiedades coincidan exactamente (ej. 'área_total_construcción' o 'area_total')
+    var htmlContent = 
+    '<table class="popup-table">' + 
+    '<tr>'
+    + '<td><strong>Ref.</strong></td>' + '<td>'+ (props.referencia_inmueble || 'N/A') + '</td>' + 
+    '</tr>' +
+    '<tr>'
+    + '<td><strong>Área (m2)</strong></td>' + '<td>'+ (props.área_total_construcción || 'N/A') + '</td>' +
+    '</tr>' +
+    '</table>';
+    
+    document.getElementById('popup-content').innerHTML = htmlContent;
+    overlay.setPosition(evt.coordinate);
+    
+  } else {
+    // Esconder popup al hacer click en espacio vacío
+    overlay.setPosition(undefined);
+  }
+});
+
+
+// Para mostrar información al hacer click en polig_comodato
+map.on('singleclick', function (evt) {
+
+  // 1. Evita que aparezca el popup si la capa principal está desactivada
+  if (!polig_comodato.getVisible()) {
+    overlay.setPosition(undefined); 
+    return; 
+  }
+
+  // 2. Buscar el elemento vector directamente en el pixel del click
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
+    // Asegura que solo lea elementos de tu capa polig_espol_
+    if (layer === polig_comodato) {
+      return clickedFeature;
+    }
+  });
+
+  // 3. Si encontramos un polígono válido bajo el cursor
+  if (feature) {
+    // Con GeoJSON local, extraes las columnas usando .getProperties()
+    var props = feature.getProperties(); 
+    
+    // Muestra todas las columnas disponibles en la consola (F12)
+    console.log("Polygon data found: ", props);
+    
+    // 4. Construir la tabla con HTML utilizando los nombres de tus campos GeoJSON
+    // NOTA: Asegúrate de que las propiedades coincidan exactamente (ej. 'área_total_construcción' o 'area_total')
+    var htmlContent = 
+    '<table class="popup-table">' + 
+    '<tr>'
+    + '<td><strong>Ref.</strong></td>' + '<td>'+ (props.referencia_inmueble || 'N/A') + '</td>' + 
+    '</tr>' +
+    '<tr>'
+    + '<td><strong>Área (m2)</strong></td>' + '<td>'+ (props.área_total_construcción || 'N/A') + '</td>' +
+    '</tr>' +
+    '</table>';
+    
+    document.getElementById('popup-content').innerHTML = htmlContent;
+    overlay.setPosition(evt.coordinate);
+    
+  } else {
+    // Esconder popup al hacer click en espacio vacío
+    overlay.setPosition(undefined);
+  }
+});
+
+
+
+// Para mostrar información al hacer click en polig_arriendo
+map.on('singleclick', function (evt) {
+
+  // 1. Evita que aparezca el popup si la capa principal está desactivada
+  if (!polig_arriedno.getVisible()) {
+    overlay.setPosition(undefined); 
+    return; 
+  }
+
+  // 2. Buscar el elemento vector directamente en el pixel del click
+  var feature = map.forEachFeatureAtPixel(evt.pixel, function (clickedFeature, layer) {
+    // Asegura que solo lea elementos de tu capa polig_espol_
+    if (layer === polig_arriendo) {
       return clickedFeature;
     }
   });
