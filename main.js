@@ -669,6 +669,7 @@ document.getElementById('popup-closer').onclick = function() {
 
 
 // Para mostrar información al hacer click en poligonos
+/*
 map.on('singleclick', function (evt) {
 
   // 1. Evita que aparezca el popup si la capa principal está desactivada
@@ -713,7 +714,7 @@ map.on('singleclick', function (evt) {
     overlay.setPosition(undefined);
   }
 });
-
+*/
 
 /*
 map.on('singleclick', function (evt) {
@@ -935,6 +936,10 @@ map.on('singleclick', function (evt) {
 */
 
 
+
+// CODIGO A UTILIZAR PARA LAS TABLAS
+// Para mostrar tabla de información al hacer click en capas
+/*
 map.on('singleclick', function (evt) {
   
   var clickedFeature = null;
@@ -999,7 +1004,7 @@ map.on('singleclick', function (evt) {
         htmlContent += '<tr><td><strong>' + key + '</strong></td><td>' + (props[key] || 'N/A') + '</td></tr>';
       }
     }
-  }*/
+  } /* 
 
   htmlContent += '</table>';
 
@@ -1007,6 +1012,7 @@ map.on('singleclick', function (evt) {
   document.getElementById('popup-content').innerHTML = htmlContent;
   overlay.setPosition(evt.coordinate); // Mantiene tu posición de click original exacta
 });
+*/
 
 
 
