@@ -357,7 +357,7 @@ const puntos_espol = new ol.layer.Vector({
         }
         puntosStyle.getText().setText(labelText);
       } else {
-        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        // Quita etiquetas al hacer zoom out
         puntosStyle.getText().setText('');
       }
 
@@ -387,7 +387,7 @@ const puntos_comodato = new ol.layer.Vector({
         }
         puntosStyle.getText().setText(labelText);
       } else {
-        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        // Quita etiquetas al hacer zoom out
         puntosStyle.getText().setText('');
       }
 
@@ -417,7 +417,7 @@ const puntos_arriendo = new ol.layer.Vector({
         }
         puntosStyle.getText().setText(labelText);
       } else {
-        // Hide labels when zoomed out far, but KEEP the circle point marker visible
+        // Quita etiquetas al hacer zoom out
         puntosStyle.getText().setText('');
       }
 
